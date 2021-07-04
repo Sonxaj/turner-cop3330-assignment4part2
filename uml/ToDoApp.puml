@@ -16,9 +16,10 @@ class ToDoAppController{
 }
 
 class ListTDA{
+    -String listName
     -Map<String taskName, TaskTDA taskAction> tasks
 
-    +addTask(String taskName, TaskTDA taskAction)
+    +addTask(String taskName, TaskTDA task)
 
     +getTask(String taskName)
 
@@ -29,7 +30,7 @@ class ListTDA{
 
 class TaskTDA{
     -String taskAction
-    -Date date
+    -LocalDate date
     -boolean isComplete
 
     +setDate(Date date)

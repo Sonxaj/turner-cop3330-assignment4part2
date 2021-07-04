@@ -19,6 +19,7 @@ public class ToDoApp extends Application {
     @Override
     public void start(Stage primaryStage){
         try {
+            // normal way wasn't working, so used this instead
             URL url = Paths.get("./src/main/resources/ucf.assignments/ToDoApp.fxml").toUri().toURL();
             Parent root = FXMLLoader.load(url);
 
@@ -29,7 +30,6 @@ public class ToDoApp extends Application {
             primaryStage.show();
 
         } catch (IOException e) {
-            System.out.println("Error loading stage.");
             e.printStackTrace();
         }
     }

@@ -3,10 +3,13 @@ package ucf.assignments;
 import javafx.event.ActionEvent;
 
 public class ToDoAppController {
+
     public void importToDoList(ActionEvent actionEvent) {
         // read list from JSON
 
         // convert to List/Map
+
+        // update GUI
     }
 
     public void exportToDoList(ActionEvent actionEvent) {
@@ -17,23 +20,31 @@ public class ToDoAppController {
 
     public void addToDoList(ActionEvent actionEvent) {
         // add a to do list
+
+        // update GUI
     }
 
     public void delToDoList(ActionEvent actionEvent) {
         // remove to do list
+
+        // update GUI
     }
 
     public void addTask(ActionEvent actionEvent) {
         // add task to to do list
+
+        // update GUI
     }
 
     public void editTask(ActionEvent actionEvent) {
-        // configure task details
+        // open new window
+
+        // configure task details using text input
+
+        // update GUI
     }
 
     public void delTask(ActionEvent actionEvent) {
         // remove task from to do list
     }
-
-    public void countItems(){} // include in lists class
 }
