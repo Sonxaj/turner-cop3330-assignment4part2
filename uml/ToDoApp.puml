@@ -1,0 +1,52 @@
+@startuml
+
+class ToDoApp{
+    main()
+    start()
+}
+
+class ToDoAppController{
+    importToDoList()
+    exportToDoList()
+    addToDoList()
+    delToDoList()
+    addTask()
+    editTask()
+    delTask()
+}
+
+class ListTDA{
+    -Map<String taskName, TaskTDA taskAction> tasks
+
+    +addTask(String taskName, TaskTDA taskAction)
+
+    +getTask(String taskName)
+
+    +showTasksAll()
+    +showTasksInc()
+    +showTasksCom()
+}
+
+class TaskTDA{
+    -String taskAction
+    -Date date
+    -boolean isComplete
+
+    +setDate(Date date)
+    +setTaskAction(String action)
+    +setIsComplete()
+
+    +getDate()
+    +getTaskAction()
+    +getIsComplete
+}
+
+javafx.Application <|-- ToDoApp
+
+ToDoApp - ToDoAppController
+
+ToDoAppController <|-- ListTDA
+
+ListTDA - TaskTDA
+
+@enduml
