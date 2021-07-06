@@ -8,8 +8,11 @@ class ToDoApp{
 class ToDoAppController{
     importToDoList()
     exportToDoList()
+
+    editToDoList()
     addToDoList()
     delToDoList()
+
     addTask()
     editTask()
     delTask()
@@ -39,7 +42,7 @@ class TaskTDA{
 
     +getDate()
     +getTaskAction()
-    +getIsComplete
+    +getIsComplete()
 }
 
 javafx.Application <|-- ToDoApp

@@ -1,3 +1,8 @@
+/*
+ *  UCF COP3330 Summer 2021 Assignment 4 Solution
+ *  Copyright 2021 Jonas Turner
+ */
+
 package ucf.assignments;
 
 import javafx.event.ActionEvent;
@@ -26,6 +31,14 @@ public class ToDoAppController {
 
     public void delToDoList(ActionEvent actionEvent) {
         // remove to do list
+
+        // update GUI
+    }
+
+    public void editToDoList(ActionEvent actionEvent){
+        // open new window
+
+        // change name
 
         // update GUI
     }

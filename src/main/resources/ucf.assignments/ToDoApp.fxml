@@ -29,6 +29,7 @@
           <Menu mnemonicParsing="false" text="List">
             <items>
                   <MenuItem mnemonicParsing="false" onAction="#addToDoList" text="Add List" />
+                  <MenuItem mnemonicParsing="false" onAction="#editToDoList" text="Edit List Name" />
                   <MenuItem mnemonicParsing="false" onAction="#delToDoList" text="Delete List" />
             </items>
           </Menu>
@@ -72,7 +73,7 @@
             </ScrollPane>
             <AnchorPane>
                <children>
-                  <TextArea fx:id="taskDetailDisplay" layoutX="11.0" layoutY="49.0" prefHeight="495.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="49.0" />
+                  <TextArea fx:id="taskDetailDisplay" editable="false" layoutX="11.0" layoutY="49.0" prefHeight="495.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="49.0" />
                   <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Details" textAlignment="CENTER" textFill="$x2" wrapText="true" />
                </children>
             </AnchorPane>
