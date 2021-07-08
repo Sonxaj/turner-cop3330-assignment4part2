@@ -5,9 +5,47 @@
 
 package ucf.assignments;
 
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 
-public class ToDoAppController {
+import java.net.URL;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.ResourceBundle;
+
+public class ToDoAppController implements Initializable {
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
+        addDate.setValue(LocalDate.now());
+    }
+
+    @FXML
+    Button addButton;
+    @FXML
+    DatePicker addDate;
+    @FXML
+    TextField addTaskDetail;
+    @FXML
+    ListView<TaskTDA> taskList;
+
+    ObservableList<TaskTDA> list = FXCollections.observableArrayList();
+
+    @FXML
+    public void addTask(ActionEvent actionEvent) {
+        // add task to to do list
+        list.add(new TaskTDA(addDate.getValue(), addTaskDetail.getText()));
+        taskList.setItems(list);
+    }
+
 
     public void importToDoList(ActionEvent actionEvent) {
         // read list from JSON
@@ -23,31 +61,7 @@ public class ToDoAppController {
         // Prompt to save JSON
     }
 
-    public void addToDoList(ActionEvent actionEvent) {
-        // add a to do list
 
-        // update GUI
-    }
-
-    public void delToDoList(ActionEvent actionEvent) {
-        // remove to do list
-
-        // update GUI
-    }
-
-    public void editToDoList(ActionEvent actionEvent){
-        // open new window
-
-        // change name
-
-        // update GUI
-    }
-
-    public void addTask(ActionEvent actionEvent) {
-        // add task to to do list
-
-        // update GUI
-    }
 
     public void editTask(ActionEvent actionEvent) {
         // open new window

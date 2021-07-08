@@ -25,7 +25,7 @@ public class ToDoApp extends Application {
     public void start(Stage primaryStage){
         try {
             // normal way wasn't working, so used this instead
-            URL url = Paths.get("./src/main/resources/ucf.assignments/ToDoApp.fxml").toUri().toURL();
+            URL url = Paths.get("src/main/resources/ucf/assignments/ToDoApp.fxml").toUri().toURL();
             Parent root = FXMLLoader.load(url);
 
             Scene scene = new Scene(root);

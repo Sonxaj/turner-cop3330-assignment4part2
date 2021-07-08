@@ -18,20 +18,10 @@ class ToDoAppController{
     delTask()
 }
 
-class ListTDA{
-    -String listName
-    -Map<String taskName, TaskTDA taskAction> tasks
-
-    +addTask(String taskName, TaskTDA task)
-
-    +getTask(String taskName)
-
-    +showTasksAll()
-    +showTasksInc()
-    +showTasksCom()
-}
 
 class TaskTDA{
+    -List<TaskTDA>
+
     -String taskAction
     -LocalDate date
     -boolean isComplete
@@ -49,8 +39,7 @@ javafx.Application <|-- ToDoApp
 
 ToDoApp - ToDoAppController
 
-ToDoAppController <|-- ListTDA
+ToDoAppController <|-- TaskTDA
 
-ListTDA - TaskTDA
 
 @enduml

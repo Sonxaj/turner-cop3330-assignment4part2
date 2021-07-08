@@ -6,33 +6,56 @@
 package ucf.assignments;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class TaskTDA {
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
 
     private String taskAction;  // item description
     private LocalDate date;     // date task is due
     private boolean isComplete; // flag for sorting
 
-    public TaskTDA(String action, LocalDate date){
-        // use string for task action
-
+    public TaskTDA(LocalDate date, String action){
         // set date as date of input
+        this.date = date;
+
+        // use string for task action
+        this.taskAction = action;
 
         // set isComplete to false
+        isComplete = false;
     }
 
-    // returns the date of a task as a string to display
-    public String getDate(){
-        return "";
+    @Override
+    public String toString(){
+
+        return String.format("%-10s %s", getDate().format(formatter), getTaskAction());
     }
 
-    // returns the description of a task
-    public String getTaskAction(){
-        return "";
+
+    // setters and getters
+    public String getTaskAction() {
+        return taskAction;
     }
 
-    // returns true if it's completed; otherwise false
-    public boolean isComplete(){
-        return false;
+    public void setTaskAction(String taskAction) {
+        this.taskAction = taskAction;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public boolean isComplete() {
+        return isComplete;
+    }
+
+    public void setComplete(boolean complete) {
+        isComplete = complete;
     }
 }
