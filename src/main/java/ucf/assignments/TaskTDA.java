@@ -8,6 +8,9 @@ package ucf.assignments;
 import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
+import javafx.beans.property.SimpleStringProperty;
+import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 
 public class TaskTDA {
@@ -43,6 +46,7 @@ public class TaskTDA {
     }
 
     public void setTaskAction(String taskAction) {
+
         this.taskAction = taskAction;
     }
 
