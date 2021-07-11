@@ -11,7 +11,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldListCell;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
 
 import java.net.URL;
@@ -29,16 +31,13 @@ public class ToDoAppController implements Initializable {
     @FXML
     TextField addTaskDetail;
     @FXML
-    ListView<TaskTDA> taskText;
-    @FXML
-    ListView<TaskTDA> taskDate;
-
-    @FXML
     TableView<TaskTDA> tableView;
     @FXML
-    TableColumn<TaskTDA, String> dateColumn;
+    TableColumn<TaskTDA, LocalDate> dateColumn;
     @FXML
     TableColumn<TaskTDA, String> textColumn;
+    @FXML
+    TableColumn<TaskTDA, CheckBox> isComCol;
 
     private ObservableList<TaskTDA> listData = FXCollections.observableArrayList();
 
@@ -46,48 +45,26 @@ public class ToDoAppController implements Initializable {
     public void initialize(URL url, ResourceBundle rb){
         // the user can see 2 lists with divider, so both must be initialized
 
-        // text half initializer
-        taskText.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        taskText.setEditable(true);
-        taskText.setCellFactory(listView -> {
-            TextFieldListCell<TaskTDA> cell = new TextFieldListCell<>();
-            cell.setConverter(new StringConverter<TaskTDA>() {
-                @Override
-                public String toString(TaskTDA object) {
-                    return object.getTaskAction();
-                }
+        // set table columns for editing and multiple-item highlighting
+        tableView.setEditable(true);
+        tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
-                @Override
-                public TaskTDA fromString(String string) {
-                    TaskTDA task = cell.getItem();
-                    task.setTaskAction(string);
-                    return task;
-                }
-            });
-            return cell;
-        });
+        // set up columns
+        dateColumn.setCellValueFactory(new PropertyValueFactory<>("date"));
+        textColumn.setCellValueFactory(new PropertyValueFactory<>("taskAction"));
+        isComCol.setCellValueFactory(new PropertyValueFactory<>("isComplete"));
 
-        // task date initializer
-        taskDate.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        taskDate.setEditable(true);
-        taskDate.setCellFactory(listView -> {
-            TextFieldListCell<TaskTDA> cell = new TextFieldListCell<>();
-            cell.setConverter(new StringConverter<TaskTDA>() {
-                @Override
-                public String toString(TaskTDA object) {
-                    return object.getDate().toString();
-                }
+        // set up data
+        tableView.setItems(listData);
+        tableView.getColumns().addAll(dateColumn, textColumn, isComCol);
 
-                @Override
-                public TaskTDA fromString(String string) {
-                    TaskTDA task = cell.getItem();
-                    task.setDate(string);
-                    return task;
-                }
-            });
-            return cell;
-        });
 
+        // make cells editable
+
+
+
+
+        // set up date picker for date program is ran
         addDate.setValue(LocalDate.now());
     }
 
@@ -95,9 +72,7 @@ public class ToDoAppController implements Initializable {
     @FXML
     public void addTask(ActionEvent actionEvent) {
         // add task to to do list
-        listData.add(
-                new TaskTDA(addDate.getValue(), addTaskDetail.getText())
-        );
+        listData.add(new TaskTDA(addDate.getValue(), addTaskDetail.getText()));
 
         updateListView();
     }
@@ -122,11 +97,7 @@ public class ToDoAppController implements Initializable {
     public void delTask(ActionEvent actionEvent) {
         // remove task(s) from to do list highlighted either from text half or date half
         listData.removeAll(
-                taskText.getSelectionModel().getSelectedItems()
-        );
-
-        listData.removeAll(
-                taskDate.getSelectionModel().getSelectedItems()
+                tableView.getSelectionModel().getSelectedItems()
         );
 
         updateListView();
@@ -134,7 +105,6 @@ public class ToDoAppController implements Initializable {
 
     // updates GUI
     public void updateListView(){
-        taskText.setItems(listData);
-        taskDate.setItems(listData);
+        tableView.setItems(listData);
     }
 }

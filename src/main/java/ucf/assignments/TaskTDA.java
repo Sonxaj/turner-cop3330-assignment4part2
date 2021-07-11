@@ -5,8 +5,10 @@
 
 package ucf.assignments;
 
+import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import javafx.scene.control.CheckBox;
 
 public class TaskTDA {
 
@@ -15,7 +17,7 @@ public class TaskTDA {
 
     private String taskAction;  // item description
     private LocalDate date;     // date task is due
-    private boolean isComplete; // flag for sorting
+    private CheckBox isComplete; // flag for sorting
 
 
     public TaskTDA(LocalDate date, String action){
@@ -25,16 +27,14 @@ public class TaskTDA {
         // use string for task action
         this.taskAction = action;
 
-        // set isComplete to false
-        this.isComplete = false;
+        // set isComplete checkbox
+        this.isComplete = new CheckBox();
     }
 
     @Override
     public String toString(){
         return String.format("%-10s %s", getDate().format(formatter), getTaskAction());
     }
-
-
 
 
     // setters and getters
@@ -54,11 +54,11 @@ public class TaskTDA {
         this.date = LocalDate.parse(inputDate, formatter);
     }
 
-    public boolean isComplete() {
+    public CheckBox getIsComplete(){
         return isComplete;
     }
 
-    public void setComplete(boolean complete) {
+    public void setComplete(CheckBox complete) {
         isComplete = complete;
     }
 }
