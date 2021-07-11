@@ -10,11 +10,13 @@ import java.time.format.DateTimeFormatter;
 
 public class TaskTDA {
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+    DateTimeFormatter formatter =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private String taskAction;  // item description
     private LocalDate date;     // date task is due
     private boolean isComplete; // flag for sorting
+
 
     public TaskTDA(LocalDate date, String action){
         // set date as date of input
@@ -24,14 +26,15 @@ public class TaskTDA {
         this.taskAction = action;
 
         // set isComplete to false
-        isComplete = false;
+        this.isComplete = false;
     }
 
     @Override
     public String toString(){
-
         return String.format("%-10s %s", getDate().format(formatter), getTaskAction());
     }
+
+
 
 
     // setters and getters
@@ -47,8 +50,8 @@ public class TaskTDA {
         return date;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDate(String inputDate) {
+        this.date = LocalDate.parse(inputDate, formatter);
     }
 
     public boolean isComplete() {

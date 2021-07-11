@@ -5,45 +5,94 @@
 
 package ucf.assignments;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldListCell;
+import javafx.util.StringConverter;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class ToDoAppController implements Initializable {
 
-    @Override
-    public void initialize(URL url, ResourceBundle rb){
-        addDate.setValue(LocalDate.now());
-    }
-
     @FXML
-    Button addButton;
+    SplitMenuButton addButton;
+    @FXML
+    MenuItem removeButton;
     @FXML
     DatePicker addDate;
     @FXML
     TextField addTaskDetail;
     @FXML
-    ListView<TaskTDA> taskList;
+    ListView<TaskTDA> taskText;
+    @FXML
+    ListView<TaskTDA> taskDate;
 
-    ObservableList<TaskTDA> list = FXCollections.observableArrayList();
+    private ObservableList<TaskTDA> listData = FXCollections.observableArrayList();
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb){
+        // the user can see 2 lists with divider, so both must be initialized
+
+        // text half initializer
+        taskText.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        taskText.setEditable(true);
+        taskText.setCellFactory(listView -> {
+            TextFieldListCell<TaskTDA> cell = new TextFieldListCell<>();
+            cell.setConverter(new StringConverter<TaskTDA>() {
+                @Override
+                public String toString(TaskTDA object) {
+                    return object.getTaskAction();
+                }
+
+                @Override
+                public TaskTDA fromString(String string) {
+                    TaskTDA task = cell.getItem();
+                    task.setTaskAction(string);
+                    return task;
+                }
+            });
+            return cell;
+        });
+
+        // task date initializer
+        taskDate.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        taskDate.setEditable(true);
+        taskDate.setCellFactory(listView -> {
+            TextFieldListCell<TaskTDA> cell = new TextFieldListCell<>();
+            cell.setConverter(new StringConverter<TaskTDA>() {
+                @Override
+                public String toString(TaskTDA object) {
+                    return object.getDate().toString();
+                }
+
+                @Override
+                public TaskTDA fromString(String string) {
+                    TaskTDA task = cell.getItem();
+                    task.setDate(string);
+                    return task;
+                }
+            });
+            return cell;
+        });
+
+        addDate.setValue(LocalDate.now());
+    }
+
 
     @FXML
     public void addTask(ActionEvent actionEvent) {
         // add task to to do list
-        list.add(new TaskTDA(addDate.getValue(), addTaskDetail.getText()));
-        taskList.setItems(list);
+        listData.add(
+                new TaskTDA(addDate.getValue(), addTaskDetail.getText())
+        );
+
+        updateListView();
     }
 
 
@@ -62,16 +111,23 @@ public class ToDoAppController implements Initializable {
     }
 
 
+    @FXML
+    public void delTask(ActionEvent actionEvent) {
+        // remove task(s) from to do list highlighted either from text half or date half
+        listData.removeAll(
+                taskText.getSelectionModel().getSelectedItems()
+        );
 
-    public void editTask(ActionEvent actionEvent) {
-        // open new window
+        listData.removeAll(
+                taskDate.getSelectionModel().getSelectedItems()
+        );
 
-        // configure task details using text input
-
-        // update GUI
+        updateListView();
     }
 
-    public void delTask(ActionEvent actionEvent) {
-        // remove task from to do list
+    // updates GUI
+    public void updateListView(){
+        taskText.setItems(listData);
+        taskDate.setItems(listData);
     }
 }
