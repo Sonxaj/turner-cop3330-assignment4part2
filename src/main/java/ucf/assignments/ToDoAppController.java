@@ -33,6 +33,13 @@ public class ToDoAppController implements Initializable {
     @FXML
     ListView<TaskTDA> taskDate;
 
+    @FXML
+    TableView<TaskTDA> tableView;
+    @FXML
+    TableColumn<TaskTDA, String> dateColumn;
+    @FXML
+    TableColumn<TaskTDA, String> textColumn;
+
     private ObservableList<TaskTDA> listData = FXCollections.observableArrayList();
 
     @Override
