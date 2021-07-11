@@ -12,12 +12,19 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,6 +32,10 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class ToDoAppController implements Initializable {
+
+    // fileChooser
+    @FXML
+    SplitPane splitPane;
 
     // buttons
     @FXML
@@ -42,11 +53,13 @@ public class ToDoAppController implements Initializable {
     @FXML
     MenuItem incOnlyButton;
 
+
     // input fields
     @FXML
     DatePicker addDate;
     @FXML
     TextField addTaskDetail;
+
 
     // table stuff
     @FXML
@@ -58,6 +71,7 @@ public class ToDoAppController implements Initializable {
     @FXML
     TableColumn<TaskTDA, CheckBox> isComCol;
 
+    // data
     private ObservableList<TaskTDA> listData = FXCollections.observableArrayList();
     private ObservableList<TaskTDA> toInsert = FXCollections.observableArrayList();
 
@@ -151,25 +165,27 @@ public class ToDoAppController implements Initializable {
         // make list for removing unwanted tasks and showing updated GUI
         ObservableList<TaskTDA> toRemove = FXCollections.observableArrayList();
 
-        // add list for removal
+        // add to list for removal
         for(TaskTDA task : listData){
             if(!(task.getIsComplete().isSelected())){
                 toRemove.add(task);
             }
         }
 
+        // remove; cache what was removed for reinsertion
         listData.removeAll(toRemove);
         toInsert.addAll(toRemove);
 
         // update user's view to only completed
         updateListView();
 
-        // clear cache
+        // clear removal cache
         toRemove.removeAll(toRemove);
     }
 
     @FXML
     public void showIncOnlyTasks(ActionEvent actionEvent){
+        // same as complete
 
         ObservableList<TaskTDA> toRemove = FXCollections.observableArrayList();
 
@@ -182,22 +198,31 @@ public class ToDoAppController implements Initializable {
         listData.removeAll(toRemove);
         toInsert.addAll(toRemove);
 
-        // update user's view to only completed
         updateListView();
 
-        // clear cache
         toRemove.removeAll(toRemove);
     }
 
 
     // file operations
     @FXML
-    public void importToDoList(ActionEvent actionEvent) {
-        // read list from JSON
+    public void importToDoList(ActionEvent actionEvent) throws IOException {
 
-        // convert to List/Map
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open .txt File");
+        Stage stage = (Stage)splitPane.getScene().getWindow();
 
-        // update GUI
+        File file = fileChooser.showOpenDialog(stage);
+
+        if(file != null){
+            // do the parse thingy
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(file);
+
+        }else{
+
+        }
+
     }
 
     @FXML
