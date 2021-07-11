@@ -15,14 +15,14 @@ public class TaskTDA {
     DateTimeFormatter formatter =
             DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
+    private String date;     // date task is due
     private String taskAction;  // item description
-    private LocalDate date;     // date task is due
     private CheckBox isComplete; // flag for sorting
 
 
     public TaskTDA(LocalDate date, String action){
         // set date as date of input
-        this.date = date;
+        this.date = date.format(formatter);
 
         // use string for task action
         this.taskAction = action;
@@ -33,7 +33,7 @@ public class TaskTDA {
 
     @Override
     public String toString(){
-        return String.format("%-10s %s", getDate().format(formatter), getTaskAction());
+        return String.format("%-10s %s", getDate(), getTaskAction());
     }
 
 
@@ -46,12 +46,12 @@ public class TaskTDA {
         this.taskAction = taskAction;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
     public void setDate(String inputDate) {
-        this.date = LocalDate.parse(inputDate, formatter);
+        this.date = inputDate;
     }
 
     public CheckBox getIsComplete(){

@@ -7,6 +7,7 @@ package ucf.assignments;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 import java.net.URL;
@@ -33,7 +35,7 @@ public class ToDoAppController implements Initializable {
     @FXML
     TableView<TaskTDA> tableView;
     @FXML
-    TableColumn<TaskTDA, LocalDate> dateColumn;
+    TableColumn<TaskTDA, String> dateColumn;
     @FXML
     TableColumn<TaskTDA, String> textColumn;
     @FXML
@@ -56,12 +58,14 @@ public class ToDoAppController implements Initializable {
 
         // set up data
         tableView.setItems(listData);
-        tableView.getColumns().addAll(dateColumn, textColumn, isComCol);
 
 
         // make cells editable
+        // date column
+        dateColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
-
+        // text column
+        textColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
 
         // set up date picker for date program is ran
@@ -73,6 +77,16 @@ public class ToDoAppController implements Initializable {
     public void addTask(ActionEvent actionEvent) {
         // add task to to do list
         listData.add(new TaskTDA(addDate.getValue(), addTaskDetail.getText()));
+
+        updateListView();
+    }
+
+    @FXML
+    public void delTask(ActionEvent actionEvent) {
+        // remove task(s) from to do list highlighted either from text half or date half
+        listData.removeAll(
+                tableView.getSelectionModel().getSelectedItems()
+        );
 
         updateListView();
     }
@@ -90,17 +104,6 @@ public class ToDoAppController implements Initializable {
         // Convert to JSON
 
         // Prompt to save JSON
-    }
-
-
-    @FXML
-    public void delTask(ActionEvent actionEvent) {
-        // remove task(s) from to do list highlighted either from text half or date half
-        listData.removeAll(
-                tableView.getSelectionModel().getSelectedItems()
-        );
-
-        updateListView();
     }
 
     // updates GUI
