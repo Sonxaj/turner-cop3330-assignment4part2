@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="ucf.assignments.ToDoAppControllerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-07-12T02:44:06" hostname="HAASXII" time="0.008">
-  <properties/>
-  <testcase name="addTask_inserts_into_table()" classname="ucf.assignments.ToDoAppControllerTest" time="0.008"/>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
-</testsuite>

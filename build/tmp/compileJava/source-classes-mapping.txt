@@ -1,6 +1,0 @@
-ucf/assignments/ToDoApp.java
- ucf.assignments.ToDoApp
-ucf/assignments/ToDoAppController.java
- ucf.assignments.ToDoAppController
-ucf/assignments/TaskTDA.java
- ucf.assignments.TaskTDA

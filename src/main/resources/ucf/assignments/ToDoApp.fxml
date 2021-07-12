@@ -29,6 +29,11 @@
                   <MenuItem fx:id="incOnlyButton" mnemonicParsing="false" onAction="#showIncOnlyTasks" text="Incomplete Items Only" />
                </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+              <items>
+                <MenuItem fx:id="helpButton" mnemonicParsing="false" onAction="#showHelpScreen" text="Show Help" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="56.0" prefWidth="859.0">
