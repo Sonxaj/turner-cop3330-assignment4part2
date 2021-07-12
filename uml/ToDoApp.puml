@@ -40,7 +40,17 @@ class ToDoAppController{
     +addTask()
     +delTask()
 
-    updateListView()
+    +changeTextCellEvent(editEvent)
+    +changeDateCellEvent(editEvent)
+
+    +fileChooserSetup()
+
+    +saveOperation(File fileToSave)
+    +loadOperation(File fileToLoad)
+
+    +showHelpScreen()
+
+    +updateListView()
 }
 
 
