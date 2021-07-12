@@ -47,6 +47,7 @@ public class TaskTDA {
         }
     }
 
+    // prints date as string
     @Override
     public String toString(){
         return String.format("%-10s %s", getDate(), getTaskAction());
