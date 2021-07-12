@@ -6,33 +6,62 @@ class ToDoApp{
 }
 
 class ToDoAppController{
-    importToDoList()
-    exportToDoList()
 
-    editToDoList()
-    addToDoList()
-    delToDoList()
+    SplitPane splitPane
 
-    addTask()
-    editTask()
-    delTask()
+    SplitMenuButton addButton
+    MenuItem removeButton
+    MenuItem importButton
+    MenuItem exportButton
+    MenuItem showAllButton
+    MenuItem comOnlyButton
+    MenuItem incOnlyButton
+
+    DatePicker addDate
+    TextField addTaskDetail
+
+    TableView<TaskTDA> tableView
+    TableColumn<TaskTDA, String> dateColumn
+    TableColumn<TaskTDA, String> textColumn
+    TableColumn<TaskTDA, CheckBox> isComCol
+
+    -ObservableList<TaskTDA> listData
+    -ObservableList<TaskTDA> toInsert
+
+    +initialize(URL url, ResourceBundle rb)
+
+    +importToDoList()
+    +exportToDoList()
+
+    +showAllTasks()
+    +showComOnlyTasks()
+    +showIncOnlyTasks()
+
+    +addTask()
+    +delTask()
+
+    updateListView()
 }
 
 
 class TaskTDA{
-    -List<TaskTDA>
 
+    -DateTimeFormatter formatter
+
+    -String date
     -String taskAction
-    -LocalDate date
-    -boolean isComplete
+    -CheckBox isComplete
 
-    +setDate(Date date)
+    +String toString()
+
+    +setDate(String date)
     +setTaskAction(String action)
     +setIsComplete()
 
     +getDate()
     +getTaskAction()
     +getIsComplete()
+    +getIsCompleteAsString()
 }
 
 javafx.Application <|-- ToDoApp

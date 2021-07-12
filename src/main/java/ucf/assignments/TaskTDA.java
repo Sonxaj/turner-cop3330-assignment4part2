@@ -5,17 +5,14 @@
 
 package ucf.assignments;
 
-import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 
 public class TaskTDA {
 
-    DateTimeFormatter formatter =
+    private DateTimeFormatter formatter =
             DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private String date;     // date task is due
@@ -78,7 +75,6 @@ public class TaskTDA {
     }
 
     public String getIsCompleteAsString(){
-
         if(getIsComplete().isSelected()){
             return "1";
         }else{

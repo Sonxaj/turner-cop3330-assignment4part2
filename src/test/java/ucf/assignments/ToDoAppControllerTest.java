@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ToDoAppControllerTest {
 
     @Test
-    void importToDoList_reads_data_from_JSON_and_adds_accordingly() {
+    void importToDoList_reads_data_from_txt_and_adds_accordingly() {
         // create a JSON with multiple lists of tasks
 
         // read from JSON
@@ -20,7 +20,7 @@ class ToDoAppControllerTest {
     }
 
     @Test
-    void exportToDoList_writes_data_to_JSON_file_and_saves() {
+    void exportToDoList_writes_data_to_txt_file_and_saves() {
         // create some lists with tasks
 
         // write a JSON that contains this data
