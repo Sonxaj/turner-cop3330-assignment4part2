@@ -6,6 +6,8 @@ If you look at my part 1, you'll notice that it's a
 significant improvement both in terms of UI design and
 functionality.
 
+Dedicated to Rey.
+
 ## Controls
 
 ### Add
