@@ -17,19 +17,20 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Scanner;
 
 public class ToDoAppController implements Initializable {
 
@@ -208,28 +209,83 @@ public class ToDoAppController implements Initializable {
     @FXML
     public void importToDoList(ActionEvent actionEvent) throws IOException {
 
+        // setup fileChooser
         FileChooser fileChooser = new FileChooser();
+
+        // set extension to .txt
+        FileChooser.ExtensionFilter extensionFilter =
+                new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+
+        fileChooser.getExtensionFilters().add(extensionFilter);
+
         fileChooser.setTitle("Open .txt File");
         Stage stage = (Stage)splitPane.getScene().getWindow();
 
         File file = fileChooser.showOpenDialog(stage);
 
         if(file != null){
-            // do the parse thingy
-            Desktop desktop = Desktop.getDesktop();
-            desktop.open(file);
+            // assuming we got the file, start reading data
+            Scanner reader = new Scanner(file);
 
-        }else{
+            // clear current table
+            listData.removeAll(listData);
 
+            while (reader.hasNextLine()){
+                // read current line from file; split using "#"
+                String[] currentLine = reader.nextLine().split("#");
+
+                // create task using date from file
+                TaskTDA taskAdd = new TaskTDA(currentLine[0], currentLine[1], currentLine[2]);
+
+                // now add
+                listData.add(taskAdd);
+            }
         }
-
     }
 
     @FXML
-    public void exportToDoList(ActionEvent actionEvent) {
-        // Convert to JSON
+    public void exportToDoList(ActionEvent actionEvent) throws IOException {
 
-        // Prompt to save JSON
+        // setup fileChooser
+        FileChooser fileChooser = new FileChooser();
+
+        // set extension to .txt
+        FileChooser.ExtensionFilter extensionFilter =
+                new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+
+        fileChooser.getExtensionFilters().add(extensionFilter);
+
+        // window stuff
+        fileChooser.setTitle("Save List");
+        Stage stage = (Stage) splitPane.getScene().getWindow();
+
+        // create text file
+        File fileSave = fileChooser.showSaveDialog(stage);
+
+        if(fileSave != null){
+
+            // write all the data to it
+            String fileText = "";
+            for (TaskTDA task:listData) {
+                fileText += task.getDate() + "#" +
+                            task.getTaskAction() + "#" +
+                            task.getIsCompleteAsString() + "\n";
+            }
+
+            FileWriter fileWriter = new FileWriter(fileSave);
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+
+            printWriter.write(fileText);
+
+            // close writers
+            printWriter.close();
+            fileWriter.close();
+        }
+
+
+
+
+
     }
 
 

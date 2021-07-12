@@ -22,7 +22,6 @@ public class TaskTDA {
     private String taskAction;  // item description
     private CheckBox isComplete; // flag for sorting
 
-
     public TaskTDA(LocalDate date, String action){
         // set date as date of input
         this.date = date.format(formatter);
@@ -32,6 +31,22 @@ public class TaskTDA {
 
         // set isComplete checkbox
         this.isComplete = new CheckBox();
+    }
+
+    // Slightly different constructor, date entered as string
+    public TaskTDA(String date, String action, String state){
+        this.date = date;
+        this.taskAction = action;
+        this.isComplete = new CheckBox();
+
+        // for reading the completion status
+        if(state.equalsIgnoreCase("0")){
+            this.isComplete.setSelected(false);
+
+        }else{
+            this.isComplete.setSelected(true);
+        }
+
     }
 
     @Override
@@ -60,6 +75,15 @@ public class TaskTDA {
 
     public CheckBox getIsComplete(){
         return isComplete;
+    }
+
+    public String getIsCompleteAsString(){
+
+        if(getIsComplete().isSelected()){
+            return "1";
+        }else{
+            return "0";
+        }
     }
 
     public void setComplete(CheckBox complete) {
