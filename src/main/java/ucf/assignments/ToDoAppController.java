@@ -14,7 +14,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TextFieldListCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -72,7 +71,6 @@ public class ToDoAppController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb){
-        // the user can see 2 lists with divider, so both must be initialized
 
         // set table columns for editing and multiple-item highlighting
         tableView.setEditable(true);
@@ -114,7 +112,7 @@ public class ToDoAppController implements Initializable {
 
     @FXML
     public void delTask(ActionEvent actionEvent) {
-        // remove task(s) from to do list highlighted either from text half or date half
+        // remove highlighted task(s) from to-do list
         listData.removeAll(
                 tableView.getSelectionModel().getSelectedItems()
         );
@@ -203,50 +201,23 @@ public class ToDoAppController implements Initializable {
     public void importToDoList(ActionEvent actionEvent) throws IOException {
 
         // setup fileChooser
-        FileChooser fileChooser = new FileChooser();
+        FileChooser fileChooser = fileChooserSetup();
 
-        // set extension to .txt
-        FileChooser.ExtensionFilter extensionFilter =
-                new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-
-        fileChooser.getExtensionFilters().add(extensionFilter);
-
+        // window stuff
         fileChooser.setTitle("Open .txt File");
         Stage stage = (Stage)splitPane.getScene().getWindow();
 
         File file = fileChooser.showOpenDialog(stage);
 
         if(file != null){
-            // assuming we got the file, start reading data
-            Scanner reader = new Scanner(file);
-
-            // clear current table
-            listData.removeAll(listData);
-
-            while (reader.hasNextLine()){
-                // read current line from file; split using "#"
-                String[] currentLine = reader.nextLine().split("#");
-
-                // create task using date from file
-                TaskTDA taskAdd = new TaskTDA(currentLine[0], currentLine[1], currentLine[2]);
-
-                // now add
-                listData.add(taskAdd);
-            }
+            loadOperation(file);
         }
     }
 
     @FXML
     public void exportToDoList(ActionEvent actionEvent) throws IOException {
 
-        // setup fileChooser
-        FileChooser fileChooser = new FileChooser();
-
-        // set extension to .txt
-        FileChooser.ExtensionFilter extensionFilter =
-                new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
-
-        fileChooser.getExtensionFilters().add(extensionFilter);
+        FileChooser fileChooser = fileChooserSetup();
 
         // window stuff
         fileChooser.setTitle("Save List");
@@ -256,31 +227,65 @@ public class ToDoAppController implements Initializable {
         File fileSave = fileChooser.showSaveDialog(stage);
 
         if(fileSave != null){
+            saveOperation(fileSave);
+        }
+    }
 
-            // write all the data to it
-            String fileText = "";
-            for (TaskTDA task:listData) {
-                fileText += task.getDate() + "#" +
-                            task.getTaskAction() + "#" +
-                            task.getIsCompleteAsString() + "\n";
-            }
+    // for using fileChooser
+    public FileChooser fileChooserSetup(){
+        // setup fileChooser
+        FileChooser fileChooser = new FileChooser();
 
-            FileWriter fileWriter = new FileWriter(fileSave);
-            PrintWriter printWriter = new PrintWriter(fileWriter);
+        // set extension to .txt
+        FileChooser.ExtensionFilter extensionFilter =
+                new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
 
-            printWriter.write(fileText);
+        fileChooser.getExtensionFilters().add(extensionFilter);
 
-            // close writers
-            printWriter.close();
-            fileWriter.close();
+        return fileChooser;
+    }
+
+    // does the saving
+    public void saveOperation(File fileToSave) throws IOException{
+        // set up text to write
+        String fileText = "";
+        for (TaskTDA task:listData) {
+            fileText += task.getDate() + "#" +
+                    task.getTaskAction() + "#" +
+                    task.getIsCompleteAsString() + "\n";
         }
 
+        // write all the data to file
+        FileWriter fileWriter = new FileWriter(fileToSave);
+        PrintWriter printWriter = new PrintWriter(fileWriter);
 
+        printWriter.write(fileText);
 
-
+        // close writers
+        printWriter.close();
+        fileWriter.close();
 
     }
 
+    // does the loading
+    public void loadOperation(File fileToLoad) throws IOException{
+        // assuming we got the file, start reading data
+        Scanner reader = new Scanner(fileToLoad);
+
+        // clear current table
+        listData.removeAll(listData);
+
+        while (reader.hasNextLine()){
+            // read current line from file; split using "#"
+            String[] currentLine = reader.nextLine().split("#");
+
+            // create task using date from file
+            TaskTDA taskAdd = new TaskTDA(currentLine[0], currentLine[1], currentLine[2]);
+
+            // now add
+            listData.add(taskAdd);
+        }
+    }
 
     // updates GUI
     public void updateListView(){

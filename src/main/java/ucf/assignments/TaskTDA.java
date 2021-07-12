@@ -8,6 +8,7 @@ package ucf.assignments;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+
 import javafx.scene.control.CheckBox;
 
 public class TaskTDA {
@@ -15,9 +16,9 @@ public class TaskTDA {
     private DateTimeFormatter formatter =
             DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    private String date;     // date task is due
-    private String taskAction;  // item description
-    private CheckBox isComplete; // flag for sorting
+    private String date;         // date task is due
+    private String taskAction;   // item description
+    private CheckBox isComplete; // marking completion
 
     public TaskTDA(LocalDate date, String action){
         // set date as date of input
@@ -30,7 +31,8 @@ public class TaskTDA {
         this.isComplete = new CheckBox();
     }
 
-    // Slightly different constructor, date entered as string
+    // Slightly different constructor, used for file operations
+    // date entered as string, also state of checkbox
     public TaskTDA(String date, String action, String state){
         this.date = date;
         this.taskAction = action;
@@ -43,7 +45,6 @@ public class TaskTDA {
         }else{
             this.isComplete.setSelected(true);
         }
-
     }
 
     @Override
@@ -62,6 +63,7 @@ public class TaskTDA {
         this.taskAction = taskAction;
     }
 
+
     public String getDate() {
         return date;
     }
@@ -69,6 +71,8 @@ public class TaskTDA {
     public void setDate(String inputDate) {
         this.date = inputDate;
     }
+
+
 
     public CheckBox getIsComplete(){
         return isComplete;
